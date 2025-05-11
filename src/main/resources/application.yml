@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: livebetting
+
+  #Database configuration
+  datasource:
+    url: jdbc:h2:mem:liveBettingDb
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+    initialization-mode: always
+
+  #JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console.enabled: true
