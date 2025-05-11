@@ -1,4 +1,4 @@
-package com.saidtokmak.livebetting.dto;
+package com.saidtokmak.livebetting.dto.bulletin;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -7,11 +7,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "bulletin")
+@Table(name = "bulletins")
 public class Bulletin {
 
     @Id
@@ -40,6 +41,9 @@ public class Bulletin {
 
     @Column(name = "match_start_time")
     private Date matchStartTime;
+
+    @ManyToMany(mappedBy = "bulletins")
+    private List<BetSlip> betSlips;
 
     @Column(name = "created_at")
     @CreationTimestamp

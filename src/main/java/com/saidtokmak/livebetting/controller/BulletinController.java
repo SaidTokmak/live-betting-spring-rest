@@ -1,7 +1,7 @@
 package com.saidtokmak.livebetting.controller;
 
-import com.saidtokmak.livebetting.dto.BulletinDTO;
-import com.saidtokmak.livebetting.dto.CreateBulletinRequestDTO;
+import com.saidtokmak.livebetting.dto.bulletin.BulletinDTO;
+import com.saidtokmak.livebetting.dto.bulletin.CreateBulletinRequestDTO;
 import com.saidtokmak.livebetting.service.BulletinService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

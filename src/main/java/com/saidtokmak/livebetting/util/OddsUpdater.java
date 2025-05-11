@@ -7,12 +7,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 @Component
@@ -42,8 +38,7 @@ public class OddsUpdater {
             bulletin.setDrawOdds(Float.valueOf(decimalFormat.format(random.nextFloat() * (maxOdds - minOdds) + minOdds)));
             bulletin.setAwayWinOdds(Float.valueOf(decimalFormat.format(random.nextFloat() * (maxOdds - minOdds) + minOdds)));
 
-
-            bulletinRepository.save(bulletin);
+            bulletinRepository.saveAndFlush(bulletin);
         });
     }
 }
