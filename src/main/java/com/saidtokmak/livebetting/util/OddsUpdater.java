@@ -1,19 +1,49 @@
 package com.saidtokmak.livebetting.util;
 
+import com.saidtokmak.livebetting.entity.Bulletin;
+import com.saidtokmak.livebetting.repository.BulletinRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 @Component
+@RequiredArgsConstructor
 public class OddsUpdater {
 
-    @Scheduled(cron = "*/1 * * * * ?")
-    public static void updateOdds(String bulletinId, Float homeWinOdds, Float drawOdds, Float awayWinOdds) {
-        // Logic to update the odds in the bulletin
+    private static final float minOdds = 1.0f;
+    private static final float maxOdds = 4.0f;
 
-        // This is a placeholder for the actual implementation
-        System.out.println("Updating odds for bulletin ID: " + bulletinId);
-        System.out.println("Home Win Odds: " + homeWinOdds);
-        System.out.println("Draw Odds: " + drawOdds);
-        System.out.println("Away Win Odds: " + awayWinOdds);
+    private static final DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
+    private final BulletinRepository bulletinRepository;
+
+    @Scheduled(cron = "*/1 * * * * ?")
+    public void updateOdds() {
+        List<Bulletin> bulletins = bulletinRepository.findAll();
+
+        if (CollectionUtils.isEmpty(bulletins)) {
+            System.out.println("No bulletins found to update.");
+            return;
+        }
+
+        bulletins.forEach(bulletin -> {
+            Random random = new Random();
+
+            bulletin.setHomeWinOdds(Float.valueOf(decimalFormat.format(minOdds + random.nextFloat() * (maxOdds - minOdds))));
+            bulletin.setDrawOdds(Float.valueOf(decimalFormat.format(random.nextFloat() * (maxOdds - minOdds) + minOdds)));
+            bulletin.setAwayWinOdds(Float.valueOf(decimalFormat.format(random.nextFloat() * (maxOdds - minOdds) + minOdds)));
+
+
+            bulletinRepository.save(bulletin);
+        });
     }
 }
